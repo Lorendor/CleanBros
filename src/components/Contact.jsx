@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const ContactForm = () => {
+    const { t, currentLanguage } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -11,13 +13,7 @@ const ContactForm = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const services = [
-        'Home Cleaning',
-        'Car Cleaning',
-        'Garden Cleaning',
-        'Deep Cleaning',
-        'Other'
-    ];
+    const services = t('contactServicesList') || ['Home Cleaning', 'Car Cleaning', 'Garden Cleaning', 'Deep Cleaning', 'Other'];
 
     const handleChange = (e) => {
         setFormData({
@@ -32,7 +28,7 @@ const ContactForm = () => {
         
         // Simulate form submission
         setTimeout(() => {
-            alert('Thank you for your message! We will get back to you soon.');
+            alert(t('contactThanksAlert'));
             setFormData({
                 name: '',
                 email: '',
@@ -50,10 +46,10 @@ const ContactForm = () => {
                 {/* Header */}
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-blue mb-4 font-chewy">
-                        Get In Touch
+                        {t('contactHeading')}
                     </h2>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        Ready to transform your space? Contact us for a free quote and let us handle the cleaning!
+                        {t('contactSubheading')}
                     </p>
                 </div>
 
@@ -62,12 +58,9 @@ const ContactForm = () => {
                         {/* Contact Info */}
                         <div className="space-y-8">
                             <div>
-                                <h3 className="text-2xl font-bold text-gray-800 mb-6 font-chewy">
-                                    Contact Information
-                                </h3>
+                                <h3 className="text-2xl font-bold text-gray-800 mb-6 font-chewy">{t('contactInfoHeading')}</h3>
                                 <p className="text-gray-600 mb-8 leading-relaxed">
-                                    Fill out the form and our team will get back to you within 24 hours. 
-                                    Or reach out directly through any of the channels below.
+                                    {t('contactInfoBody')}
                                 </p>
                             </div>
 
@@ -78,7 +71,7 @@ const ContactForm = () => {
                                         <span className="text-white text-xl">📧</span>
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-sm">Email</p>
+                                        <p className="text-gray-500 text-sm">{t('contactEmail')}</p>
                                         <p className="text-gray-800 font-semibold">info@cleanpro.com</p>
                                     </div>
                                 </div>
@@ -88,7 +81,7 @@ const ContactForm = () => {
                                         <span className="text-white text-xl">📞</span>
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-sm">Phone</p>
+                                        <p className="text-gray-500 text-sm">{t('contactPhone')}</p>
                                         <p className="text-gray-800 font-semibold">+385 99 123 4567</p>
                                     </div>
                                 </div>
@@ -98,27 +91,27 @@ const ContactForm = () => {
                                         <span className="text-white text-xl">🕒</span>
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-sm">Availability</p>
-                                        <p className="text-gray-800 font-semibold">24/7 Customer Support</p>
+                                        <p className="text-gray-500 text-sm">{t('contactAvailability')}</p>
+                                        <p className="text-gray-800 font-semibold">{t('contactAvailabilityValue')}</p>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Quick Stats */}
                             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                                <h4 className="font-bold text-gray-800 mb-4 font-chewy">Why Choose Us?</h4>
+                                <h4 className="font-bold text-gray-800 mb-4 font-chewy">{t('contactWhyChoose')}</h4>
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Response Time</span>
-                                        <span className="text-blue font-semibold">Within 24h</span>
+                                        <span className="text-gray-600">{t('contactResponseTime')}</span>
+                                        <span className="text-blue font-semibold">{t('contactResponseTimeValue')}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Free Quote</span>
-                                        <span className="text-blue font-semibold">Yes</span>
+                                        <span className="text-gray-600">{t('contactFreeQuote')}</span>
+                                        <span className="text-blue font-semibold">{t('contactFreeQuoteValue')}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Satisfaction</span>
-                                        <span className="text-blue font-semibold">Guaranteed</span>
+                                        <span className="text-gray-600">{t('contactSatisfaction')}</span>
+                                        <span className="text-blue font-semibold">{t('contactSatisfactionValue')}</span>
                                     </div>
                                 </div>
                             </div>
@@ -129,9 +122,7 @@ const ContactForm = () => {
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* Name */}
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">
-                                        Full Name 
-                                    </label>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">{t('contactFullName')}</label>
                                     <input
                                         type="text"
                                         id="name"
@@ -140,16 +131,14 @@ const ContactForm = () => {
                                         onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all duration-300"
-                                        placeholder="Enter your full name"
+                                        placeholder={t('contactFullNamePlaceholder')}
                                     />
                                 </div>
 
                                 {/* Email & Phone */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">
-                                            Email 
-                                        </label>
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">{t('contactEmailLabel')}</label>
                                         <input
                                             type="email"
                                             id="email"
@@ -158,13 +147,11 @@ const ContactForm = () => {
                                             onChange={handleChange}
                                             required
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all duration-300"
-                                            placeholder="your@email.com"
+                                            placeholder={t('contactEmailPlaceholder')}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">
-                                            Phone
-                                        </label>
+                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">{t('contactPhoneLabel')}</label>
                                         <input
                                             type="tel"
                                             id="phone"
@@ -172,16 +159,14 @@ const ContactForm = () => {
                                             value={formData.phone}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all duration-300"
-                                            placeholder="+385 99 123 4567"
+                                            placeholder={t('contactPhonePlaceholder')}
                                         />
                                     </div>
                                 </div>
 
                                 {/* Service Selection */}
                                 <div>
-                                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">
-                                        Service Interested In
-                                    </label>
+                                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">{t('contactServiceInterested')}</label>
                                     <select
                                         id="service"
                                         name="service"
@@ -189,7 +174,7 @@ const ContactForm = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all duration-300"
                                     >
-                                        <option value="">Select a service</option>
+                                        <option value="">{t('contactSelectService')}</option>
                                         {services.map((service) => (
                                             <option key={service} value={service}>
                                                 {service}
@@ -200,9 +185,7 @@ const ContactForm = () => {
 
                                 {/* Message */}
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">
-                                        Message
-                                    </label>
+                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2 font-chewy">{t('contactMessage')}</label>
                                     <textarea
                                         id="message"
                                         name="message"
@@ -211,7 +194,7 @@ const ContactForm = () => {
                                         required
                                         rows="4"
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent transition-all duration-300 resize-none"
-                                        placeholder="Tell us about your cleaning needs..."
+                                        placeholder={t('contactMessagePlaceholder')}
                                     ></textarea>
                                 </div>
 
@@ -227,10 +210,10 @@ const ContactForm = () => {
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            Sending...
+                                            {t('contactSending')}
                                         </span>
                                     ) : (
-                                        'Send Message'
+                                        t('contactSendMessage')
                                     )}
                                 </button>
                             </form>

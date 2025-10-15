@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const ServicesMenu = () => {
   const [activeService, setActiveService] = useState(null);
+  const { t } = useLanguage();
 
   const services = [
     {
@@ -48,12 +51,8 @@ const ServicesMenu = () => {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white font-chewy mb-4">
-            Our Premium Services
-          </h2>
-          <p className="text-lg text-white font-chewy max-w-2xl mx-auto leading-relaxed">
-            Experience the difference with our professional cleaning services tailored to your needs
-          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white font-chewy mb-4">{t('servicesHeading')}</h2>
+          <p className="text-lg text-white font-chewy max-w-2xl mx-auto leading-relaxed">{t('servicesSubheading')}</p>
         </div>
 
         {/* Services Grid */}
@@ -94,18 +93,20 @@ const ServicesMenu = () => {
                   </div>
 
                   {/* CTA Button */}
+                  <Link to={`/services/${service.id}`}>
                   <button className="group/btn inline-flex items-center space-x-2 bg-white px-6 py-3 rounded-full font-semibold text-gray-800 hover:text-white transition-all duration-300 hover:shadow-lg border border-gray-200 hover:border-transparent relative overflow-hidden">
-                    <span className="relative z-10">Learn More</span>
-                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left`}></div>
-                    <svg
-                      className="w-4 h-4 relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                      <span className="relative z-10">{t('servicesLearnMore')}</span>
+                      <div className={`absolute inset-0 bg-gradient-to-r ${service.color} transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left`}></div>
+                      <svg
+                        className="w-4 h-4 relative z-10 transform group-hover/btn:translate-x-1 transition-transform duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </Link>
                 </div>
               </div>
 
